@@ -4,10 +4,13 @@ import SettingsForm from "./components/SettingsForm";
 import SettingsList from "./components/SettingsList";
 import MyButton from "./components/UI/button/MyButton";
 import axios from "axios";
+import MyModal from "./components/UI/MyModal/MyModal";
+import PlotlyComponent from "./components/PlotlyComponent";
 
 function App() {
     const [sort, setSort] = useState({column: 'TraceNumber', direction: 'ASC'})
     const [settings, setSettings] = useState([])
+    const [modal, setModal] = useState(false)
 
     const createSetting = (newSetting) => {
         setSettings([...settings, newSetting])
@@ -32,11 +35,15 @@ function App() {
         e.preventDefault()
         const url = generateUrl()
         const response = await axios.get(url)
+        setModal(true)
         console.log(response)
     }
 
     return (
         <div>
+            <MyModal visible={modal} setVisible={setModal}>
+                <PlotlyComponent></PlotlyComponent>
+            </MyModal>
             <SettingsForm
                 create={createSetting}
                 sort={sort}
