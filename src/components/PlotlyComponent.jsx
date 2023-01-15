@@ -1,13 +1,23 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
-import createPlotlyComponent from 'react-plotly.js/factory'
 
-const PlotlyComponent = (props) => {
+const PlotlyComponent = ({plotlyData, revision}) => {
     return (
         <div>
-            <Plot/>
+            <Plot
+                data={[
+                    {
+                        z: plotlyData,
+                        type: 'heatmap',
+                        colorscale: 'Spectral'
+                    }
+                ]}
+                layout={{width: 1000, height: 500, title: 'Traces', datarevision: revision}}
+                revision={revision}
+                responsive={true}
+            />
         </div>
-    );
+);
 };
 
 export default PlotlyComponent;
