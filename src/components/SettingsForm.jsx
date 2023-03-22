@@ -1,28 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import MySelect from "./UI/select/MySelect";
-import MyButton from "./UI/button/MyButton";
-import axios from "axios";
 import GroupingForm from "./GroupingForm";
 import SortingForm from "./SortingForm";
+import axios from "axios";
+import FileSettings from "./FileSettings";
 
-const SettingsForm = ({title, create, sort, setSort}) => {
+const SettingsForm = ({title, create, sort, setSort, selectedFile, setSelectedFile}) => {
     const [headerOptions, setHeaderOptions] = useState([])
 
 
     useEffect(() => {
-        fetch('http://localhost:8000/headers')
-            .then(res => res.json())
-            .then(data => {
-                setHeaderOptions(data);
+        axios.get(process.env.REACT_APP_BASE_URL + '/api/v1/headers')
+            .then((response) => {
+                setHeaderOptions(response.data)
             });
     }, []);
 
+
+    const [disabled, setDisabled] = useState(true)
     return (
         <form>
+            <FileSettings
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
+            setDisabled={setDisabled}
+            />
             <h1>{title}</h1>
             <GroupingForm
                 create={create}
                 headerOptions={headerOptions}
+                selectedFile={selectedFile}
+                disabled={disabled}
             />
             <SortingForm
                 headerOptions={headerOptions}

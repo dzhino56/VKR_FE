@@ -4,16 +4,15 @@ import MyButton from "./UI/button/MyButton";
 import React, {useState} from 'react';
 import axios from "axios";
 
-const Settings = ({setTraces, revision, setRevision}) => {
+const Settings = ({setTraces, revision, setRevision, setVisible}) => {
     const [settings, setSettings] = useState([])
     const [sort, setSort] = useState({column: 'TraceNumber', direction: 'ASC'})
-    const [insResponse, setResponse] = useState({})
 
     const generateUrl = () => {
-        let url = 'http://localhost:8000/traces?'
+        let url = process.env.REACT_APP_BASE_URL + '/api/v1/traces?'
         console.log(settings)
         settings.map(setting => (
-            url += setting.title + '=' + setting.value + '&'
+            url += 'fileId=' + selectedFile.id + '&' + setting.title + '=' + setting.value + '&'
         ))
         url += 'sort=' + sort.column + '__' + sort.direction
         console.log(url)
@@ -25,10 +24,9 @@ const Settings = ({setTraces, revision, setRevision}) => {
         const url = generateUrl()
         const response = await axios.get(url)
         const data = response.data
-        setResponse(response)
-        console.log(data)
         setTraces(data)
         setRevision(revision + 1)
+        setVisible(false)
     }
 
 
@@ -40,12 +38,16 @@ const Settings = ({setTraces, revision, setRevision}) => {
         setSettings(settings.filter(p => p.id !== setting.id))
     }
 
+    const [selectedFile, setSelectedFile] = useState({id: '', name: ''})
+
     return (
         <div>
             <SettingsForm
                 create={createSetting}
                 sort={sort}
                 setSort={setSort}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
             />
             {settings.length !== 0
                 ?

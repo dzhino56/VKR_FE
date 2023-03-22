@@ -1,25 +1,22 @@
-import React, {useState} from "react";
-import './styles/App.css'
-import PlotlyComponent from "./components/PlotlyComponent";
-import Settings from "./components/Settings"
+import React from 'react';
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
-function App() {
-    const [traces, setTraces] = useState([])
-    const [revision, setRevision] = useState(1)
+import Login from "./Login";
+import WorkZone from "./WorkZone";
+import Register from "./Register";
 
+const App = () => {
     return (
-        <div>
-            <Settings
-                setTraces={setTraces}
-                revision={revision}
-                setRevision={setRevision}
-            />
-            <PlotlyComponent
-                plotlyData={traces}
-                revision={revision}
-            />
+        <div className="wrapper">
+            <Router>
+                <Routes>
+                    <Route exact path="/" element={<WorkZone/>}/>
+                    <Route exact path="/register" element={<Register/>}/>
+                    <Route exact path="/login" element={<Login/>}/>
+                </Routes>
+            </Router>
         </div>
     );
-}
+};
 
 export default App;

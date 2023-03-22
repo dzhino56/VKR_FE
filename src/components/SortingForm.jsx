@@ -26,8 +26,8 @@ const SortingForm = ({sort, setSort, headerOptions}) => {
                 onChange={setSelectedSortingValue}
                 defaultValue={"Сортировать по"}
                 options={[
-                    {name: 'По возрастанию', value:'ASC'},
-                    {name: 'По убыванию', value:'DESC'},
+                    {name: 'По возрастанию', id:'ASC'},
+                    {name: 'По убыванию', id:'DESC'},
                 ]}
             />
         </div>

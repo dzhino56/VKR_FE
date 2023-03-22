@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import classes from "./MySelect.module.css";
 
 const MySelect = ({options, arrayOptions, defaultValue, value, onChange, disabled=false}) => {
@@ -19,7 +18,7 @@ const MySelect = ({options, arrayOptions, defaultValue, value, onChange, disable
             ))
             :
                 options.map(option => (
-                    <option key={option.value} value={option.value}>
+                    <option key={option.id} value={option.id}>
                         {option.name}
                     </option>
                 ))

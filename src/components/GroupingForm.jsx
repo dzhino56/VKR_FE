@@ -3,7 +3,7 @@ import MySelect from "./UI/select/MySelect";
 import MyButton from "./UI/button/MyButton";
 import axios from "axios";
 
-const GroupingForm = ({create, headerOptions}) => {
+const GroupingForm = ({create, headerOptions, selectedFile, disabled}) => {
 
     const [disabledValue, setDisabledValue] = useState(true)
     const [valueOptions, setValueOptions] = useState([])
@@ -22,7 +22,7 @@ const GroupingForm = ({create, headerOptions}) => {
     const setSelectedHeader = async (column) => {
         setSetting({...setting, title: column})
         const uniqueValues = await axios.get(
-            "http://localhost:8000/values?column=" + column
+            "http://localhost:8000/api/v1/values?column=" + column + '&fileId=' + selectedFile.id
         )
         setValueOptions(uniqueValues.data)
         setDisabledValue(false)
@@ -40,6 +40,7 @@ const GroupingForm = ({create, headerOptions}) => {
                 onChange={setSelectedHeader}
                 defaultValue={"Выберите столбец для группировки"}
                 arrayOptions={headerOptions}
+                disabled={disabled}
             />
             <MySelect
                 value={setting.value}
