@@ -21,12 +21,11 @@ const Settings = ({setTraces, revision, setRevision, setVisible}) => {
 
     async function getData(e) {
         e.preventDefault()
-        const url = generateUrl()
-        const response = await axios.get(url)
+        setVisible(false)
+        const response = await axios.get(generateUrl())
         const data = response.data
         setTraces(data)
         setRevision(revision + 1)
-        setVisible(false)
     }
 
 

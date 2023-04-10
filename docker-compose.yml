@@ -1,0 +1,13 @@
+services:
+  nginx:
+    build:
+      context: .
+      target: vkr_frontend
+    image: vkr-front/nginx:dev
+    restart: on-failure
+    ports:
+      - "8081:80"
+      - "8443:443"
+    volumes:
+        - ./nginx.key:/etc/ssl/nginx.key
+        - ./nginx.crt:/etc/ssl/nginx.crt

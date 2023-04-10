@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import MySelect from "./UI/select/MySelect";
 
-const FileSettings = (selectedFile, setSelectedFile, setDisabled) => {
+const FileSettings = ({selectedFile, setSelectedFile, setDisabled}) => {
     const [files, setFiles] = useState([])
 
     const setSelectedFile2 = (e) => {
@@ -20,6 +20,13 @@ const FileSettings = (selectedFile, setSelectedFile, setDisabled) => {
             }).then((response) => {
             setFiles(response['data']['files']);
         }).catch(error => {
+            switch (error.response.status) {
+                case 403:
+                    window.location = '/login'
+                    break;
+                default:
+                    break;
+            }
         });
     }, []);
 

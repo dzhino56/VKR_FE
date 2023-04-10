@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import MySelect from "./UI/select/MySelect";
 import GroupingForm from "./GroupingForm";
 import SortingForm from "./SortingForm";
 import axios from "axios";
@@ -21,9 +20,9 @@ const SettingsForm = ({title, create, sort, setSort, selectedFile, setSelectedFi
     return (
         <form>
             <FileSettings
-            selectedFile={selectedFile}
-            setSelectedFile={setSelectedFile}
-            setDisabled={setDisabled}
+                selectedFile={selectedFile}
+                setSelectedFile={setSelectedFile}
+                setDisabled={setDisabled}
             />
             <h1>{title}</h1>
             <GroupingForm

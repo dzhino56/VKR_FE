@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import {getCookie} from "../functions/functions";
 
 class FileUploader extends Component {
     state = {
@@ -34,7 +35,16 @@ class FileUploader extends Component {
 
         // Request made to the backend api
         // Send formData object
-        axios.post(process.env.REACT_APP_BASE_URL + "/api/v1/files", formData);
+        axios.post(process.env.REACT_APP_BASE_URL + "/api/v1/files", formData, {headers: {'X-CSRFToken': getCookie('csrftoken')}, withCredentials: true})
+            .catch((error) => {
+                switch (error.response.status) {
+                    case 403:
+                        window.location = '/login'
+                        break;
+                    default:
+                        break
+                }
+            });
     };
 
     // File content to be displayed after
@@ -45,9 +55,6 @@ class FileUploader extends Component {
 
         return (
             <div>
-                <h1>
-                    GeeksforGeeks
-                </h1>
                 <h3>
                     File Upload using React!
                 </h3>
