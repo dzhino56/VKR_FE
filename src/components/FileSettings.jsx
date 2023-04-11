@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import MySelect from "./UI/select/MySelect";
+import FileUploader from "./FileUploader";
 
 const FileSettings = ({selectedFile, setSelectedFile, setDisabled}) => {
     const [files, setFiles] = useState([])
 
     const setSelectedFile2 = (e) => {
-        setSelectedFile(files.filter(p => p.id === parseInt(e))[0])
+        const file = files.filter(p => p.id === parseInt(e))[0]
+        console.log(file)
+        setSelectedFile({id: file.id, name: file.name})
         setDisabled(false)
     }
 
@@ -37,6 +40,10 @@ const FileSettings = ({selectedFile, setSelectedFile, setDisabled}) => {
                 onChange={setSelectedFile2}
                 defaultValue={"Выберите файл"}
                 options={files}
+            />
+            <FileUploader
+                files={files}
+                setFiles={setFiles}
             />
         </div>
     );

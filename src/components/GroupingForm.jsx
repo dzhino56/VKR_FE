@@ -21,6 +21,7 @@ const GroupingForm = ({create, headerOptions, selectedFile, disabled}) => {
 
     const setSelectedHeader = async (column) => {
         setSetting({...setting, title: column})
+        console.log(selectedFile)
         const uniqueValues = await axios.get(
             "http://localhost:8000/api/v1/values?column=" + column + '&fileId=' + selectedFile.id
         )

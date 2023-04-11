@@ -3,22 +3,9 @@ import axios from "axios";
 import {getCookie} from "../functions/functions";
 
 class FileUploader extends Component {
-    state = {
-
-        // Initially, no file is selected
-        selectedFile: null
-    };
-
-    // On file select (from the pop up)
-    onFileChange = event => {
-
-        // Update the state
-        this.setState({selectedFile: event.target.files[0]});
-
-    };
 
     // On file upload (click the upload button)
-    onFileUpload = () => {
+    onFileUpload = event => {
 
         // Create an object of formData
         const formData = new FormData();
@@ -26,16 +13,16 @@ class FileUploader extends Component {
         // Update the formData object
         formData.append(
             "file",
-            this.state.selectedFile,
-            this.state.selectedFile.name
+            event.target.files[0],
+            event.target.files[0].name
         );
-
-        // Details of the uploaded file
-        console.log(this.state.selectedFile);
 
         // Request made to the backend api
         // Send formData object
-        axios.post(process.env.REACT_APP_BASE_URL + "/api/v1/files", formData, {headers: {'X-CSRFToken': getCookie('csrftoken')}, withCredentials: true})
+        axios.post(process.env.REACT_APP_BASE_URL + "/api/v1/files", formData, {
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            withCredentials: true
+        })
             .catch((error) => {
                 switch (error.response.status) {
                     case 403:
@@ -44,6 +31,10 @@ class FileUploader extends Component {
                     default:
                         break
                 }
+            })
+            .then((response) => {
+                const file = response['data']['file'];
+                this.props.setFiles([...this.props.files, file]);
             });
     };
 
@@ -51,19 +42,9 @@ class FileUploader extends Component {
     // file upload is complete
 
     render() {
-
-
         return (
             <div>
-                <h3>
-                    File Upload using React!
-                </h3>
-                <div>
-                    <input type="file" onChange={this.onFileChange}/>
-                    <button onClick={this.onFileUpload}>
-                        Upload!
-                    </button>
-                </div>
+                <input type="file" onChange={this.onFileUpload}/>
             </div>
         );
     }
