@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Plot from 'react-plotly.js';
 
-const PlotlyComponent = ({plotlyData, revision, settings, tickvals}) => {
+const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue}) => {
 
     const [screenWidth, setScreenWidth] = useState(0);
     const [screenHeight, setScreenHeight] = useState(0);
@@ -38,6 +38,7 @@ const PlotlyComponent = ({plotlyData, revision, settings, tickvals}) => {
             <Plot
                 data={[
                     {
+                        x: xTickVals,
                         y: arrayRange(tickvals[0], tickvals[1], tickvals[2]),
                         z: plotlyData,
                         type: 'heatmap',
@@ -46,15 +47,15 @@ const PlotlyComponent = ({plotlyData, revision, settings, tickvals}) => {
                             [0.5, 'rgba(255, 255, 255, 0.9)'],
                             [1, 'rgba(255, 0, 0, 0.9)']
                         ],
-                        zmax: 500,
-                        zmin: -500,
+                        zmax: zMaxValue,
+                        zmin: (-1) * zMaxValue,
                         zauto: false,
                     }
                 ]}
                 layout={{
                     width: screenWidth,
                     height: screenHeight,
-                    title: 'Traces',
+                    title: getTitle(),
                     yaxis: {
                         title: "Time (ms)",
                         zeroline: false,
@@ -62,8 +63,8 @@ const PlotlyComponent = ({plotlyData, revision, settings, tickvals}) => {
 
                     },
                     xaxis: {
-                        title: getTitle(),
-                        showticklabels: false,
+                        title: 'Sorting',
+                        tickvals: xTickVals
                     }
                 }}
 
