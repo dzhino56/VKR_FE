@@ -14,12 +14,12 @@ const SortingForm = ({sort, setSort, headerOptions}) => {
 
     return (
         <div>
-            <h1>Настройки сортировки</h1>
             <MySelect
                 value={sort.column}
                 onChange={setSelectedSortingColumn}
                 defaultValue={"Выберите столбец для сортировки"}
                 arrayOptions={headerOptions}
+                style={{width: '50%'}}
             />
             <MySelect
                 value={sort.direction}
@@ -29,6 +29,7 @@ const SortingForm = ({sort, setSort, headerOptions}) => {
                     {name: 'По возрастанию', id:'ASC'},
                     {name: 'По убыванию', id:'DESC'},
                 ]}
+                style={{width: '50%'}}
             />
         </div>
     );

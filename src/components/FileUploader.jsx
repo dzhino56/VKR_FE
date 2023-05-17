@@ -34,7 +34,7 @@ class FileUploader extends Component {
             })
             .then((response) => {
                 const file = response['data']['file'];
-                this.props.setFiles([...this.props.files, file]);
+                this.props.addFile(file);
             });
     };
 

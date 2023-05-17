@@ -24,10 +24,11 @@ function WorkZone() {
         setMaxValue(newMaxValue)
         if (newMaxValue !== 0) {
             setZMaxValue(newMaxValue)
+            createDrawingTraces(originalTraces, multiplier, newMaxValue)
         } else {
             setZMaxValue(500)
+            createDrawingTraces(originalTraces, multiplier, 500)
         }
-        createDrawingTraces(originalTraces, multiplier, newMaxValue)
     }
 
     const changeTraces = (traces) => {

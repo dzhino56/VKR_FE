@@ -1,8 +1,8 @@
 import classes from "./MySelect.module.css";
 
-const MySelect = ({options, arrayOptions, defaultValue, value, onChange, disabled=false}) => {
+const MySelect = ({options, arrayOptions, defaultValue, value, onChange, disabled=false, ...props}) => {
     return (
-        <select
+        <select {...props}
             value={value}
             className={classes.mySelect}
             onChange={event => onChange(event.target.value)}

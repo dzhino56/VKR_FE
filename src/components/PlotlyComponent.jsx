@@ -13,7 +13,7 @@ const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue})
             let myWidth = window.innerWidth;
             let myHeight = window.innerHeight;
             setScreenHeight(myHeight - 60)
-            setScreenWidth(myWidth - 60)
+            setScreenWidth(myWidth * 0.7)
             console.log(arrayRange(0, 4498, 2))
         };
 
@@ -34,7 +34,7 @@ const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue})
         );
 
     return (
-        <div>
+        <div style={{float: "left"}}>
             <Plot
                 data={[
                     {

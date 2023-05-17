@@ -3,45 +3,33 @@ import MySelect from "./UI/select/MySelect";
 import MyButton from "./UI/button/MyButton";
 import axios from "axios";
 
-const GroupingForm = ({create, headerOptions, selectedFile, disabled}) => {
-
-    const [disabledValue, setDisabledValue] = useState(true)
-    const [valueOptions, setValueOptions] = useState([])
-    const [setting, setSetting] = useState({title: '', value: ''})
-
-    const addNewSetting = (e) => {
-        e.preventDefault()
-        const newSetting = {
-            ...setting, id: Date.now()
-        }
-        create(newSetting)
-        setSetting({title: '', value: ''})
-        setDisabledValue(true)
-    }
+const GroupingItem = ({setting, setSetting, addNewSetting, remove, headerOptions, selectedFile, disabledHeader, disabledValue, setDisabledValue, ...props}) => {
+    const [valueOptions, setValueOptions] = useState(setting.uniqueValues)
 
     const setSelectedHeader = async (column) => {
-        setSetting({...setting, title: column})
-        console.log(selectedFile)
         const uniqueValues = await axios.get(
             "http://localhost:8000/api/v1/values?column=" + column + '&fileId=' + selectedFile.id
         )
+        const newSetting = {...setting, title: column, uniqueValues: uniqueValues.data}
+        setSetting(newSetting)
         setValueOptions(uniqueValues.data)
         setDisabledValue(false)
     }
 
     const setSelectedValue = (e) => {
         setSetting({...setting, value: e})
+        console.log(e)
     }
 
     return (
         <div>
-            <h1>Настройки группировки</h1>
             <MySelect
                 value={setting.title}
                 onChange={setSelectedHeader}
                 defaultValue={"Выберите столбец для группировки"}
                 arrayOptions={headerOptions}
-                disabled={disabled}
+                disabled={disabledHeader}
+                style={{width: "40%"}}
             />
             <MySelect
                 value={setting.value}
@@ -49,10 +37,17 @@ const GroupingForm = ({create, headerOptions, selectedFile, disabled}) => {
                 defaultValue={"Выберите значение для группировки"}
                 disabled={disabledValue}
                 arrayOptions={valueOptions}
+                style={{width: "40%"}}
             />
-            <MyButton onClick={addNewSetting}>Создать группировку</MyButton>
+            <MyButton
+                onClick={addNewSetting}
+                style={{width: "7.5%", marginLeft: '5%'}}
+            >
+                +
+            </MyButton>
+            <MyButton style={{width: "7.5%"}} onClick={() => remove(setting)}>X</MyButton>
         </div>
     );
 };
 
-export default GroupingForm;
+export default GroupingItem;
