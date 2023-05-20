@@ -12,6 +12,7 @@ function WorkZone() {
     const [maxValue, setMaxValue] = useState(0)
     const [xTickVals, setXTickVals] = useState([])
     const [zMaxValue, setZMaxValue] = useState(500)
+    const [sorting, setSorting] = useState({name: '', direction: ''})
 
 
     const changeMultiplier = (e) => {
@@ -70,6 +71,7 @@ function WorkZone() {
                 tickvals={tickVals}
                 xTickVals={xTickVals}
                 zMaxValue={zMaxValue}
+                sorting={sorting}
             />
             <Settings
                 multiplier={multiplier}
@@ -77,6 +79,7 @@ function WorkZone() {
                 changeMaxValue={changeMaxValue}
                 changeMultiplier={changeMultiplier}
                 changeTraces={changeTraces}
+                setSorting={setSorting}
                 setTickVals={setTickVals}
                 setXTickVals={setXTickVals}
                 settings={settings}

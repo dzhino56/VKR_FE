@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Plot from 'react-plotly.js';
 
-const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue}) => {
+const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue, sorting}) => {
 
     const [screenWidth, setScreenWidth] = useState(0);
     const [screenHeight, setScreenHeight] = useState(0);
@@ -13,7 +13,7 @@ const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue})
             let myWidth = window.innerWidth;
             let myHeight = window.innerHeight;
             setScreenHeight(myHeight - 60)
-            setScreenWidth(myWidth * 0.7)
+            setScreenWidth(myWidth * 0.7 - 50)
             console.log(arrayRange(0, 4498, 2))
         };
 
@@ -34,7 +34,7 @@ const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue})
         );
 
     return (
-        <div style={{float: "left"}}>
+        <div style={{float: "left", border: '1px solid teal', margin: '20px'}}>
             <Plot
                 data={[
                     {
@@ -63,8 +63,9 @@ const PlotlyComponent = ({plotlyData, settings, tickvals, xTickVals, zMaxValue})
 
                     },
                     xaxis: {
-                        title: 'Sorting',
-                        tickvals: xTickVals
+                        title: sorting.name,
+                        tickvals: xTickVals,
+                        autotick: true
                     }
                 }}
 
